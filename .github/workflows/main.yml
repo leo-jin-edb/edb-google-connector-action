@@ -33,6 +33,7 @@ jobs:
           ls -la ./.github/actions/edb-actions
       # This step actuall loads the edb custom action and executes it
       - name: run private action
+        id: edbaction
         uses: ./.github/actions/edb-actions
         with:
           module_id: "github-jira-sync"
@@ -45,7 +46,7 @@ jobs:
       - name: test action
         uses: leo-jin-edb/edb-google-connector-action@main
         with:
-          ticketKey: ${{ steps.run_private_action.outputs.ticketKey}}
+          ticketKey: ${{ steps.edbaction.outputs.ticketKey}}
           who-to-greet: "Leo Jin"
 
       # Use the output from the `hello` step
