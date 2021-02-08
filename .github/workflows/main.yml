@@ -21,6 +21,12 @@ jobs:
           ref: "main"
           path: .github/actions/edb-actions
 
+      - name: switch branch
+        run: |
+          git pull
+          git checkout feat/output-metrics
+        working-directory: ./.github/actions/edb-actions
+
       # Optional step to verify checkout was successfully executed
       - name: varify
         run: |
