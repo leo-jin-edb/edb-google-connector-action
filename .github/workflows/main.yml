@@ -12,6 +12,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout private action
+        uses: actions/checkout@v2
+        with:
+          # This is the actual action we will execute
+          repository: EnterpriseDB/edb-actions
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: "main"
+          path: .github/actions/edb-actions
+
+      # Optional step to verify checkout was successfully executed
+      - name: varify
+        run: |
+          ls -la ./.github/actions/edb-actions
+      # This step actuall loads the edb custom action and executes it
+      - name: run private action
+        uses: ./.github/actions/edb-actions
+        with:
+          module_id: "github-jira-sync"
+          strategy: "unidirectional"
+          transition_map: '{ "start": "dev start", "review": "review start", "done": "test start" }'
+        env:
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_URL: "https://edbtest.atlassian.net"
+
       - name: test action
         uses: leo-jin-edb/edb-google-connector-action@main
         with:
