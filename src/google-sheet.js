@@ -69,7 +69,6 @@ const writeData = async (auth, payload) => {
           [ticketKey, transitionId, transitionName, transitionTimestamp],
         ]
       } else {
-        console.log('found it files = ', files)
         reportId = files[0].id
         reportValues = [
           [ticketKey, transitionId, transitionName, transitionTimestamp],
