@@ -50,6 +50,9 @@ jobs:
           GOOG_SA_KEY: ${{ secrets.GOOG_SA_KEY }}
         with:
           ticketKey: ${{ steps.edbaction.outputs.ticketKey}}
+          transitionId: ${{ steps.edbaction.outputs.transitionId}}
+          transitionName: ${{ steps.edbactions.outputs.transitionName }}
+          timestamp: ${{ steps.edbactions.outputs.timestamp }}
           who-to-greet: "Leo Jin"
 
       # Use the output from the `hello` step
