@@ -1,18 +1,23 @@
-const core = require("@actions/core");
-const github = require("@actions/github");
+const core = require('@actions/core')
+const github = require('@actions/github')
 const goog = require('./src/index')
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput("who-to-greet");
-  const ticketKey = core.getInput("ticketKey");
-  console.log(`Hello ${nameToGreet}! ticketKey = ${ticketKey}`);
-  const time = new Date().toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-  goog.execute()
+  const ticketKey = core.getInput('ticketKey')
+  const transitionId = core.getInput('transitionId')
+  const transitionName = core.getInput('transitionName')
+  const timestamp = core.getInput('timestamp')
+  if (ticketKey && ticketKey !== '') {
+    core.info(`Found ticket info, we will sent data tickey key = '${ticketKey}'`)
+    goog.execute({
+      ticketKey,
+      transitionId,
+      transitionName,
+      timestamp,
+    })
+  } else {
+    core.info(`No ticket key found, skipping...`)
+  }
 } catch (error) {
-  core.setFailed(error.message);
+  core.setFailed(error.message)
 }
