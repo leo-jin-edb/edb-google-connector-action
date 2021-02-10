@@ -19,9 +19,7 @@ const writeData = async (auth, payload) => {
     const drive = google.drive({ version: 'v3', auth })
     const sheets = google.sheets({ version: 'v4', auth })
     const { ticketKey, transitionId, transitionName, timestamp: transitionTimestamp } = payload
-    // drive.files.delete({
-    //   fileId: `1JGnfttQJf4peGf3X7rfbxOBzpKRC2JXjC-zrLW_-ba8`
-    // })
+   
     const folderRes = await drive.files.list({
       q: folderQuery,
     })
@@ -87,7 +85,6 @@ const writeData = async (auth, payload) => {
           values: reportValues,
         },
       })
-      console.log('file id to write to = ', reportId)
     }
   } catch (e) {
     console.log('error = ', e)
