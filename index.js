@@ -4,6 +4,7 @@ const goog = require('./src/index')
 
 try {
   const metrics = core.getInput('metrics')
+  const { ticketKey } = metric
   if (ticketKey && ticketKey !== '') {
     core.info(`Found ticket info, we will sent data tickey key = '${ticketKey}'`)
     goog.execute(metrics)
