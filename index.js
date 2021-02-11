@@ -18,7 +18,7 @@ try {
     core.warning('No metrics found, skipping....')
   }
 
-  console.log(`print out github event ${JSON.stringify(github.context.payload)}`)
+  console.log(`print out github context ${JSON.stringify(github.context)}`)
 } catch (error) {
   core.setFailed(error.message)
 }
