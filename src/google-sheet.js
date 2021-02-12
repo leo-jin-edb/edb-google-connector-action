@@ -1,7 +1,7 @@
 const { google } = require('googleapis')
 
 /**
- * payload: { ticketKey, transtionId, transitionName, timestamp}
+ * payload: { ticketKey, ticketStatus, ticketStatusCategory, ticketType, transitionedOn }
  */
 const writeData = async (auth, payload) => {
   const now = new Date()
@@ -18,8 +18,7 @@ const writeData = async (auth, payload) => {
   try {
     const drive = google.drive({ version: 'v3', auth })
     const sheets = google.sheets({ version: 'v4', auth })
-    const { ticketKey, transitionId, transitionName, timestamp: transitionTimestamp } = payload
-   
+    const { ticketKey, ticketStatus, ticketStatusCategory, ticketType, transitionedOn } = payload
     const folderRes = await drive.files.list({
       q: folderQuery,
     })
@@ -65,13 +64,13 @@ const writeData = async (auth, payload) => {
         })
         reportId = spreadsheetId
         reportValues = [
-          ['Tickey Key', 'Transition Id', 'Transition Name', 'Transitioned On'],
-          [ticketKey, transitionId, transitionName, transitionTimestamp],
+          ['Tickey Key', 'Ticket Type', 'Status Category', 'Status', 'Transitioned On'],
+          [ticketKey, ticketType, ticketStatusCategory, ticketStatus, transitionedOn],
         ]
       } else {
         reportId = files[0].id
         reportValues = [
-          [ticketKey, transitionId, transitionName, transitionTimestamp],
+          [ticketKey, ticketType, ticketStatusCategory, ticketStatus, transitionedOn],
         ]
       }
 
